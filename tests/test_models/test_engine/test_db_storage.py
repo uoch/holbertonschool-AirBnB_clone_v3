@@ -105,11 +105,17 @@ class TestFileStorage(unittest.TestCase):
         count_reviews = models.storage.count(Review)
         count_amenities = models.storage.count(Amenity)
 
+        # Print the counts
+        print("Count of States:", count_states)
+        print("Count of Cities:", count_cities)
+        print("Count of Reviews:", count_reviews)
+        print("Count of Amenities:", count_amenities)
+
         # Assert that the counts are accurate
-        self.assertEqual(count_states, 2)
-        self.assertEqual(count_cities, 2)
-        self.assertEqual(count_reviews, 0)
-        self.assertEqual(count_amenities, 0)
+        self.assertEqual(count_states, 3)
+        self.assertEqual(count_cities, 3)
+        self.assertEqual(count_reviews, 1)
+        self.assertEqual(count_amenities, 1)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_true(self):

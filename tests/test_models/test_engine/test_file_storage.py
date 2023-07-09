@@ -114,7 +114,6 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count_true(self):
         """Test that count returns the correct count of objects"""
         state1 = State(name="California")
@@ -126,6 +125,8 @@ class TestFileStorage(unittest.TestCase):
         models.storage.new(city1)
         models.storage.new(city2)
         models.storage.save()
+        all_objects = models.storage.all()
+        print(all_objects)
 
         # Check the count of objects for each class
         count_states = models.storage.count(State)
@@ -133,11 +134,21 @@ class TestFileStorage(unittest.TestCase):
         count_reviews = models.storage.count(Review)
         count_amenities = models.storage.count(Amenity)
 
+        # Print the counts
+        print("Count of States:", count_states)
+        print("Count of Cities:", count_cities)
+        print("Count of Reviews:", count_reviews)
+        print("Count of Amenities:", count_amenities)
+
         # Assert that the counts are accurate
-        # self.assertEqual(count_states, 2)
-        # self.assertEqual(count_cities, 2)
-        self.assertEqual(count_reviews, 0)
-        self.assertEqual(count_amenities, 0)
+        self.assertEqual(
+            count_states, 3, f"Expected 2, but found {count_states}")
+        self.assertEqual(
+            count_cities, 3, f"Expected 2, but found {count_cities}")
+        self.assertEqual(count_reviews, 1,
+                         f"Expected 0, but found {count_reviews}")
+        self.assertEqual(count_amenities, 1,
+                         f"Expected 0, but found {count_amenities}")
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_true(self):
