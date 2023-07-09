@@ -70,6 +70,8 @@ class FileStorage:
         self.reload()
 
     def count(self, cls=None):
+        """Returns the number of objects 
+        in storage matching the given class."""
         if cls is not None:
             new_dict = {}
             for key, value in self.__objects.items():
@@ -80,6 +82,8 @@ class FileStorage:
             return len(self.__objects)
 
     def get(self, cls, id):
+        """Returns the number of objects 
+        in storage matching the given class."""
         if id is not None and isinstance(cls, type):
             key = "{}.{}".format(cls.__name__, id)
             return self.__objects.get(key)
