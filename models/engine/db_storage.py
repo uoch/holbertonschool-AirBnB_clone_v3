@@ -72,7 +72,7 @@ class DBStorage:
         self.__session = Session
 
     def count(self, cls=None):
-        """Returns the number of objects 
+        """Returns the number of objects
         in storage matching the given class."""
         new_dict = {}
         for clss in classes:
@@ -88,7 +88,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Returns the number of objects 
+        """Returns the number of objects
         in storage matching the given class."""
         if id is not None and cls is not None:
             obj = self.__session.query(cls).get(id)
