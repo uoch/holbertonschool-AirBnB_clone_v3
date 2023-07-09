@@ -2,8 +2,6 @@
 """
 Create a folder views inside v1
 """
-
-
 from api.v1.views import index
 from flask import Blueprint
 
