@@ -7,7 +7,7 @@ app_views that returns a JSON: "status" ok
 from flask import jsonify
 from . import app_views
 from flask import Flask
-from models import amenity, city, place, review, state, user
+from models import amenity, city, place, review, state, user, storage
 
 
 @app_views.route('/status', strict_slashes=False)
