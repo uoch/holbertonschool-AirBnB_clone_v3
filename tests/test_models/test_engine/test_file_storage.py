@@ -134,7 +134,7 @@ class TestFileStorage(unittest.TestCase):
         count_amenities = models.storage.count(Amenity)
 
         # Assert that the counts are accurate
-        #self.assertEqual(count_states, 2)
+        # self.assertEqual(count_states, 2)
         self.assertEqual(count_cities, 2)
         self.assertEqual(count_reviews, 0)
         self.assertEqual(count_amenities, 0)
