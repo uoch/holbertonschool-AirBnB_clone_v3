@@ -8,16 +8,18 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
 def get_places(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    places = [place.to_dict() for place in storage.all(Place).values() if place.city_id == city_id]
+    places = [place.to_dict() for place in 
+              storage.all(Place).values()
+              if place.city_id == city_id]
     return jsonify(places)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
@@ -25,7 +27,7 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
@@ -35,7 +37,7 @@ def delete_place(place_id):
     return jsonify({}), 200
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_place(city_id):
     city = storage.get(City, city_id)
     if city is None:
