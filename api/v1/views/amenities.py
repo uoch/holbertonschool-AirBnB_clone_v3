@@ -9,7 +9,7 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET'], 
+@app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
 def Amenity1():
     slist = []
@@ -44,7 +44,7 @@ def Amenity3(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['POST'], 
+@app_views.route('/amenities', methods=['POST'],
                  strict_slashes=False)
 def pAmenity4():
     js = request.get_json()
@@ -60,19 +60,19 @@ def pAmenity4():
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
-def Amenity5(amenity_id):
-    states = storage.all(Amenity)
-    key = "Amenity."+amenity_id
-    if key not in states:
+def update_amenity(amenity_id):
+    all_amenities = storage.all(Amenity)
+    amenity_key = "Amenity." + amenity_id
+    if amenity_key not in all_amenities:
         abort(404)
-    js = request.get_json()
-    if not js:
+    request_data = request.get_json()
+    if not request_data:
         abort(400, 'Not a JSON')
-    a = states[key]
-    m = a.__dict__
-    for i in js:
-        if i not in ["id", "created_at",
-                     "updated_at"]:
-            m[i] = js[i]
+    amenity = all_amenities[amenity_key]
+    amenity_dict = amenity.__dict__
+    for key, value in request_data.items():
+        if key not in ["id", "created_at", "updated_at"]:
+            amenity_dict[key] = value
     storage.save()
-    return jsonify(m.to_dict()), 200
+    return jsonify(amenity.to_dict()), 200
+

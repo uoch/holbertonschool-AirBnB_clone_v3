@@ -9,6 +9,7 @@ pep8 = "*"
 flask = "*"
 mysqlclient = "*"
 flask-cors = "*"
+requests = "*"
 
 [dev-packages]
 
