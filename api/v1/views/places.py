@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""0-setup_web_static.sh"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
