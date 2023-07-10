@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-mport app_views from api.v1.views
-create a route /status on the object
+Import app_views from api.v1.views
+Create a route /status on the object
 """
 
 from api.v1.views import app_views
@@ -17,8 +17,8 @@ def get_reviews(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    reviews = [review.to_dict() for review in
-               storage.all(Review).values() if review.place_id == place_id]
+    reviews = [review.to_dict() for review in storage.all(Review).values()
+               if review.place_id == place_id]
     return jsonify(reviews)
 
 
@@ -70,8 +70,7 @@ def update_review(review_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if key not in ["id", "user_id", "place_id",
-                       "created_at", "updated_at"]:
+        if key not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
             setattr(review, key, value)
     storage.save()
     return jsonify(review.to_dict()), 200

@@ -1,18 +1,13 @@
-#!/usr/bin/python3
-"""
-mport app_views from api.v1.views
-create a route /status on the object
-"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities', methods=['GET'], )
 def get_amenities():
     amenities = storage.all(Amenity).values()
-    return jsonify([amenity.to_dict() for amenity in amenities])
+    return jsonify([amty.to_dict() for amty in amenities])
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
@@ -33,7 +28,7 @@ def delete_amenity(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
+@app_views.route('/amenities', methods=['POST'])
 def create_amenity():
     data = request.get_json()
     if not data:
