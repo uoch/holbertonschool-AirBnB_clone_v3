@@ -16,7 +16,7 @@ from models.user import User
 def get_reviews(place_id):
     place = storage.get(Place, place_id)
     if place is None:
-        abort(404)
+        abort(400)
     reviews = [review.to_dict() for review in storage.all(Review).values()
                if review.place_id == place_id]
     return jsonify(reviews)
@@ -26,7 +26,7 @@ def get_reviews(place_id):
 def get_review(review_id):
     review = storage.get(Review, review_id)
     if review is None:
-        abort(404)
+        abort(400)
     return jsonify(review.to_dict())
 
 
@@ -34,7 +34,7 @@ def get_review(review_id):
 def delete_review(review_id):
     review = storage.get(Review, review_id)
     if review is None:
-        abort(404)
+        abort(400)
     storage.delete(review)
     storage.save()
     return jsonify({}), 200
@@ -44,7 +44,7 @@ def delete_review(review_id):
 def create_review(place_id):
     place = storage.get(Place, place_id)
     if place is None:
-        abort(404)
+        abort(400)
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
@@ -54,7 +54,7 @@ def create_review(place_id):
         abort(400, 'Missing text')
     user = storage.get(User, data['user_id'])
     if user is None:
-        abort(404)
+        abort(400)
     review = Review(place_id=place_id, **data)
     storage.new(review)
     storage.save()
@@ -65,7 +65,7 @@ def create_review(place_id):
 def update_review(review_id):
     review = storage.get(Review, review_id)
     if review is None:
-        abort(404)
+        abort(400)
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
