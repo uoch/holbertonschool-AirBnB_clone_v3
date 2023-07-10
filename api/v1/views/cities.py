@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+"""
+mport app_views from api.v1.views
+create a route /status on the object
+"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
