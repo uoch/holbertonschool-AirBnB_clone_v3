@@ -68,6 +68,7 @@ def create_review(place_id):
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_review(review_id):
+    lis = ["id", "user_id", "place_id", "created_at", "updated_at"]
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -75,8 +76,7 @@ def update_review(review_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if key not in ["id", "user_id", "place_id",
-                       "created_at", "updated_at"]:
+        if key not in lis:
             setattr(review, key, value)
     storage.save()
     return jsonify(review.to_dict()), 200
