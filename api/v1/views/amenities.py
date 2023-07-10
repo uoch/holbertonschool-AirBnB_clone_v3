@@ -6,7 +6,7 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET'], )
+@app_views.route('/amenities', methods=['GET'] )
 def get_amenities():
     amenities = storage.all(Amenity).values()
     return jsonify([amty.to_dict() for amty in amenities])

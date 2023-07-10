@@ -13,9 +13,10 @@ from models.user import User
 def get_places(city_id):
     city = storage.get(City, city_id)
     if city is None:
-        abort(400)
-    places = [place.to_dict() for place in storage.all(Place).values()
-              if place.city_id == city_id]
+        abort(404)
+    places = [
+        place.to_dict() for p in storage.all(Place).values() if p.city_id == city_id
+    ]
     return jsonify(places)
 
 
@@ -24,7 +25,7 @@ def get_places(city_id):
 def get_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
-        abort(400)
+        abort(404)
     return jsonify(place.to_dict())
 
 
@@ -33,7 +34,7 @@ def get_place(place_id):
 def delete_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
-        abort(400)
+        abort(404)
     storage.delete(place)
     storage.save()
     return jsonify({}), 200
@@ -44,7 +45,7 @@ def delete_place(place_id):
 def create_place(city_id):
     city = storage.get(City, city_id)
     if city is None:
-        abort(400)
+        abort(404)
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
@@ -54,7 +55,7 @@ def create_place(city_id):
         abort(400, 'Missing name')
     user = storage.get(User, data['user_id'])
     if user is None:
-        abort(400)
+        abort(404)
     place = Place(city_id=city_id, **data)
     storage.new(place)
     storage.save()
@@ -66,7 +67,7 @@ def create_place(city_id):
 def update_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
-        abort(400)
+        abort(404)
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
